@@ -16,9 +16,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
-      - name: Delete huge unnecessary tools folder
-        run: rm -rf /opt/hostedtoolcache
+
+      # Runner runs out of space without this action
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
 
       - name: Log into GitHub Container Registry
         uses: docker/login-action@v3
