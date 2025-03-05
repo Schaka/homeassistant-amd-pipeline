@@ -1,0 +1,43 @@
+name: faster-whisper-wyoming
+
+on:
+  push:
+    paths:
+      - faster-whisper/**
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  HSA_OVERRIDE_GFX_VERSION: 9.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log into GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v3
+        name: Check out code    
+
+      - name: Build dependencies
+        run: cd faster-whisper/C2Translate-build && docker compose build && docker compose up
+      
+      - name: Build Whisper Wyoming Container
+        id: push
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: ./faster-whisper
+          push: true
+          tags: latest
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/faster-whisper-wyoming
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true    
