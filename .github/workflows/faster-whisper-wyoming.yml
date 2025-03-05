@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - faster-whisper/**
+      - .github/**
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -25,7 +27,11 @@ jobs:
         name: Check out code    
 
       - name: Build dependencies
-        run: cd faster-whisper/C2Translate-build && docker compose build && docker compose up
+        working-directory: ./faster-whisper/C2Translate-build
+        run: |
+          mkdir dist
+          docker compose build
+          docker compose up
       
       - name: Build Whisper Wyoming Container
         id: push
