@@ -1,0 +1,28 @@
+services: 
+  whisper-wyoming:
+    build:
+      context: .
+
+    # for debugging
+    #entrypoint: tail
+    #command: -f /dev/null
+
+    volumes:
+      - ./data:/data
+
+    # you need to compile this for your architecture
+    # for GCN 5th gen based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=9.0.0
+    # for RDNA 1 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.1.0
+    # for RDNA 2 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.3.0
+    # for RDNA 3 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=11.0.0
+    environment:
+      - HSA_OVERRIDE_GFX_VERSION=9.0.0
+
+    devices:
+      - /dev/dri:/dev/dri
+      #- /dev/kfd:/dev/kfd
+
+    security_opt:
+      - seccomp:unconfined
+    group_add:
+      - video

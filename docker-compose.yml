@@ -1,0 +1,8 @@
+services: 
+  baseimage:
+    build:
+      context: ./baseimage
+      dockerfile: Dockerfile
+
+    devices:
+      - /dev/dri:/dev/dri
