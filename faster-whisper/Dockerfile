@@ -5,13 +5,15 @@ RUN pip install -U pip && pip install wyoming==1.6.0 faster-whisper==1.1.1 token
 RUN apt-get update && apt-get -y install nano ffmpeg libomp-dev
 
 RUN mkdir /app && mkdir /app/wyoming_faster_whisper && \
-    git clone https://github.com/rhasspy/wyoming-faster-whisper.git wyoming && \
+    git clone -b v2.4.0 https://github.com/rhasspy/wyoming-faster-whisper.git wyoming && \
     cp wyoming/wyoming_faster_whisper/* /app/wyoming_faster_whisper && \
     rm -r wyoming
 
 COPY ./run.sh /app/run.sh
 COPY ./C2Translate-build/dist /deps
 WORKDIR /app
+
+RUN chmod +x /app/run.sh
 
 RUN pip install /deps/*.whl && \
     ldconfig /deps

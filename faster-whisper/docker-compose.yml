@@ -10,17 +10,25 @@ services:
     volumes:
       - ./data:/data
 
+    # See compatbility matrix: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html
     # you need to compile this for your architecture
     # for GCN 5th gen based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=9.0.0
     # for RDNA 1 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.1.0
     # for RDNA 2 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.3.0
     # for RDNA 3 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=11.0.0
     environment:
-      - HSA_OVERRIDE_GFX_VERSION=9.0.0
+      #- HSA_OVERRIDE_GFX_VERSION=9.0.0
+      - PYTORCH_ROCM_ARCH="gfx906"
+      - HIP_VISIBLE_DEVICES=0
+      - WHISPER_MODEL=distil-small.en
+      - WHISPER_LANGUAGE=en
 
     devices:
       - /dev/dri:/dev/dri
-      #- /dev/kfd:/dev/kfd
+      - /dev/kfd:/dev/kfd
+
+    ports:
+      - 10300:10300  
 
     security_opt:
       - seccomp:unconfined

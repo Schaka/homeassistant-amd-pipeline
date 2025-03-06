@@ -5,6 +5,7 @@ WORKDIR /src
 
 RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules
 COPY build.sh /src/build.sh
+RUN chmod +x /src/build.sh
 
 # For debugging purposes
 ENTRYPOINT ["conda", "run", "-n", "py_3.12", "/src/build.sh"]
