@@ -1,8 +1,45 @@
 services: 
-  baseimage:
+  llama-cpp-python-rocm:
     build:
-      context: ./baseimage
-      dockerfile: Dockerfile
+      context: .
+
+    # for debugging
+    #entrypoint: tail
+    #command: -f /dev/null
+
+    volumes:
+      - ./data:/models
+
+    # See compatbility matrix: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html
+    # you need to compile this for your architecture
+    # for GCN 5th gen based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=9.0.0
+    # for RDNA 1 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.1.0
+    # for RDNA 2 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.3.0
+    # for RDNA 3 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=11.0.0
+    environment:
+      #- HSA_OVERRIDE_GFX_VERSION=9.0.0
+      - PYTORCH_ROCM_ARCH="gfx906"
+      - HIP_VISIBLE_DEVICES=0
+      
+      # https://github.com/MeetKai/functionary#llamacpp-inference
+      # https://llama-cpp-python.readthedocs.io/en/latest/server/#llama_cpp.server.settings.ServerSettings
+      - MODEL=functionary-small-v3.2.Q8_0.gguf
+      - CHAT_FORMAT=functionary-v3
+      - USE_MLOCK=1
+      - USE_MMAP=1
+      - HF_MODEL_REPO_ID=meetkai/functionary-small-v3.2-GGUF
+      - HF_PRETRAINED_MODEL_NAME_OR_PATH=meetkai/functionary-small-v3.2-GGUF
+      #- HF_TOKENIZER_CONFIG_PATH=tokenizer_config.json
+      - N_CTX=2048
 
     devices:
       - /dev/dri:/dev/dri
+      - /dev/kfd:/dev/kfd # ROCm Kernel driver
+
+    ports:
+      - 8000:8000  
+
+    security_opt:
+      - seccomp:unconfined
+    group_add:
+      - video
