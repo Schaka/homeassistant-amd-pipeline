@@ -16,9 +16,9 @@ You will have to build your own images and follow ROCm docs to get the drivers r
 Generally, some variation of OpenAI's Whisper is used to achieve this. For now, this repository supports faster-whisper.
 But the plan is to support WhisperX and possibly other HA integrations at some point if they are fast and accurate.
 
-Both of these rely on CTranslate2. Unfortunately, there seems (https://github.com/OpenNMT/CTranslate2/issues/1072)[little interest in supporting ROCm]. Whisper.cpp seems to lack any ROCm support - but Vulkan could work as a fallback.
+Both of these rely on CTranslate2. Unfortunately, there seems [little interest in supporting ROCm](https://github.com/OpenNMT/CTranslate2/issues/1072). Whisper.cpp seems to lack any ROCm support - but Vulkan could work as a fallback.
 
-Luckily enough, there is a (https://github.com/arlo-phoenix/CTranslate2-rocm)[fork of CTranslate2] that works with ROCm (for now). It seems semi-maintained and in my limited testing has worked just fine with ROCM 6.3.3.
+Luckily enough, there is a [fork of CTranslate2](https://github.com/arlo-phoenix/CTranslate2-rocm) that works with ROCm (for now). It seems semi-maintained and in my limited testing has worked just fine with ROCM 6.3.3.
 
 Unfortunately for us, it requires being built. I've containerized the entire built process according to their instructions.
 
