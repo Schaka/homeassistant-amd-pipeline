@@ -8,7 +8,8 @@ services:
     #command: -f /dev/null
 
     volumes:
-      - ./data:/models
+      - ./data/hugging_face_models:/root/.cache/huggingface/hub
+      - ./data/static_models:/models
 
     # See compatbility matrix: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html
     # you need to compile this for your architecture
@@ -24,7 +25,7 @@ services:
       # https://github.com/MeetKai/functionary#llamacpp-inference
       # https://llama-cpp-python.readthedocs.io/en/latest/server/#llama_cpp.server.settings.ServerSettings
       - MODEL=functionary-small-v3.2.Q8_0.gguf
-      - CHAT_FORMAT=functionary-v3
+      - CHAT_FORMAT=functionary-v2 # v3 is not available in python wrapper but has references in llamacpp
       - USE_MLOCK=1
       - USE_MMAP=1
       - HF_MODEL_REPO_ID=meetkai/functionary-small-v3.2-GGUF
