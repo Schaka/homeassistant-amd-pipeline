@@ -8,7 +8,7 @@ ENV CMAKE_ARGS="-DCMAKE_C_COMPILER=/opt/rocm/bin/amdclang -DCMAKE_CXX_COMPILER=/
 RUN apt update && apt install -y libstdc++-12-dev libstdc++-12-doc
 
 # This installs the dependencies, different layer than compilation for faster rebuilds
-RUN pip install -U pip && huggingface-hub transformers sentencepiece tokenizers==0.21.*
+RUN pip install -U pip && pip install huggingface-hub transformers sentencepiece tokenizers==0.21.*
 # This will install the python wrapper but also download and compile llama.cpp
 RUN pip install -U pip && pip install llama-cpp-python 'llama-cpp-python[server]'
 
