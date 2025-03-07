@@ -24,12 +24,12 @@ services:
       
       # https://github.com/MeetKai/functionary#llamacpp-inference
       # https://llama-cpp-python.readthedocs.io/en/latest/server/#llama_cpp.server.settings.ServerSettings
-      - MODEL=functionary-small-v3.2.Q8_0.gguf
+      - MODEL=functionary-small-v2.5.Q4_0.gguf
       - CHAT_FORMAT=functionary-v2 # v3 is not available in python wrapper but has references in llamacpp
       - USE_MLOCK=1
       - USE_MMAP=1
-      - HF_MODEL_REPO_ID=meetkai/functionary-small-v3.2-GGUF
-      - HF_PRETRAINED_MODEL_NAME_OR_PATH=meetkai/functionary-small-v3.2-GGUF
+      - HF_MODEL_REPO_ID=meetkai/functionary-small-v2.5-GGUF
+      - HF_PRETRAINED_MODEL_NAME_OR_PATH=meetkai/functionary-small-v2.5-GGUF
       #- HF_TOKENIZER_CONFIG_PATH=tokenizer_config.json
       - N_CTX=2048
 
