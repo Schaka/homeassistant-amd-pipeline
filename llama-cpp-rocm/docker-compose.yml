@@ -25,6 +25,7 @@ services:
       #- LLAMA_ARG_MODEL_URL=
       - LLAMA_ARG_HF_REPO=bartowski/functionary-small-v3.2-GGUF
       - LLAMA_ARG_HF_FILE=functionary-small-v3.2-Q5_K_M.gguf
+      - LLAMA_ARG_CHAT_TEMPLATE=models/templates/meetkai-functionary-medium-v3.2.jinja
 
       #- LLAMA_ARG_FLASH_ATTN
       #- LLAMA_ARG_MLOCK
