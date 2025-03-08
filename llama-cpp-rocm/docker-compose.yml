@@ -1,0 +1,45 @@
+services: 
+  llama-cpp-rocm:
+    build:
+      context: .
+
+    # for debugging
+    #entrypoint: tail
+    #command: -f /dev/null
+
+    volumes:
+      - ./data/static_models:/models
+
+    # See compatbility matrix: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html
+    # you need to compile this for your architecture
+    # for GCN 5th gen based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=9.0.0
+    # for RDNA 1 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.1.0
+    # for RDNA 2 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=10.3.0
+    # for RDNA 3 based GPUs and APUs HSA_OVERRIDE_GFX_VERSION=11.0.0
+    environment:
+      #- HSA_OVERRIDE_GFX_VERSION=9.0.0
+      - HIP_VISIBLE_DEVICES=0
+      
+      # https://huggingface.co/docs/hub/en/gguf-llamacpp
+      - LLAMA_ARG_MODEL=/models/functionary-small-v3.2.Q4_0.gguf
+      #- LLAMA_ARG_MODEL_URL=
+      - LLAMA_ARG_HF_REPO=meetkai/functionary-small-v3.2-GGUF
+      - LLAMA_ARG_HF_FILE=functionary-small-v3.2.Q4_0.gguf
+
+      #- LLAMA_ARG_FLASH_ATTN
+      #- LLAMA_ARG_MLOCK
+      #- LLAMA_ARG_NO_MMAP
+      - LLAMA_ARG_N_GPU_LAYERS_DRAFT=-1
+      - LLAMA_ARG_CTX_SIZE=4096
+
+    devices:
+      - /dev/dri:/dev/dri
+      #- /dev/kfd:/dev/kfd # ROCm Kernel driver
+
+    ports:
+      - 8000:8000  
+
+    security_opt:
+      - seccomp:unconfined
+    group_add:
+      - video
