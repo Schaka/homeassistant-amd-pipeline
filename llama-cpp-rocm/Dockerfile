@@ -36,4 +36,4 @@ RUN groupadd -g 1001 homeassistant && \
 #USER 1001:1001
 
 # https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md
-ENTRYPOINT [ "llama-server", "--jinja", "--port", "8000"]
+ENTRYPOINT [ "llama-server", "--jinja", "--host", "0.0.0.0", "--port", "8000"]
