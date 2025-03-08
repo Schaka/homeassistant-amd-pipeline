@@ -21,10 +21,10 @@ services:
       - HIP_VISIBLE_DEVICES=0
       
       # https://huggingface.co/docs/hub/en/gguf-llamacpp
-      - LLAMA_ARG_MODEL=/models/functionary-small-v3.2.Q4_0.gguf
+      - LLAMA_ARG_MODEL=/models/functionary-small-v3.2-Q5_K_M.gguf
       #- LLAMA_ARG_MODEL_URL=
-      - LLAMA_ARG_HF_REPO=meetkai/functionary-small-v3.2-GGUF
-      - LLAMA_ARG_HF_FILE=functionary-small-v3.2.Q4_0.gguf
+      - LLAMA_ARG_HF_REPO=bartowski/functionary-small-v3.2-GGUF
+      - LLAMA_ARG_HF_FILE=functionary-small-v3.2-Q5_K_M.gguf
 
       #- LLAMA_ARG_FLASH_ATTN
       #- LLAMA_ARG_MLOCK
