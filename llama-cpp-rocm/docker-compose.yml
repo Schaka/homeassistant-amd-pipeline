@@ -29,7 +29,7 @@ services:
       #- LLAMA_ARG_FLASH_ATTN
       #- LLAMA_ARG_MLOCK
       #- LLAMA_ARG_NO_MMAP
-      - LLAMA_ARG_N_GPU_LAYERS=-1
+      - LLAMA_ARG_N_GPU_LAYERS=999
       - LLAMA_ARG_CTX_SIZE=4096
 
     devices:
