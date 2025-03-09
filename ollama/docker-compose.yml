@@ -1,0 +1,13 @@
+services: 
+  ollama:
+    image: ollama/ollama:rocm
+
+    volumes:
+      - ./data:/root/.ollama
+
+    ports:
+      - 11434:11434
+
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/kfd:/dev/kfd
