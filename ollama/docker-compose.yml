@@ -1,22 +1,19 @@
 services: 
   ollama:
     image: ollama/ollama:rocm
-
     volumes:
       - ./data:/root/.ollama
-
     ports:
       - 11434:11434
-
     devices:
       - /dev/dri:/dev/dri
       - /dev/kfd:/dev/kfd
 
   ollama-webui:
-    image: ghcr.io/oslook/ollama-webui:latest
+    image: ghcr.io/oslook/ollama-webui:main
     ports:
       - 3000:3000
     environment:
       - NODE_ENV=production
     depends_on: 
-      - ollama  
+      - ollama 
